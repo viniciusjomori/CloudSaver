@@ -44,6 +44,11 @@ export class CloudSaverStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: CloudSaverStackProps) {
     super(scope, id, props);
 
+    cdk.Tags.of(this).add('Project', 'Cloud Saver')
+    cdk.Tags.of(this).add('Enviroment', props.envName)
+    cdk.Tags.of(this).add('CreatedBy', 'AWS CDK')
+    cdk.Tags.of(this).add('UpdateDate', new Date().toISOString())
+
     const dockerLambda = new lambda.DockerImageFunction(this, "DockerLambda", {
       functionName: `cloudsaver-${props.envName}-lambda`,
       code: lambda.DockerImageCode.fromImageAsset("./image"),
